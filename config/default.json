@@ -1,0 +1,6 @@
+{
+  "port": 5000,
+  "mongoURI": "mongodb+srv://vdl255:veselkov255@nodejsapp.no9kj.mongodb.net/NodeJsApp?retryWrites=true&w=majority",
+  "jwtSecretKey": "secret",
+  "baseUrl": "http://localhost:5000"
+}
