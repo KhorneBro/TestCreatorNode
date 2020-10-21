@@ -1,6 +1,7 @@
 const {Schema, model, Types} = require('mongoose')
 
 const schema = new Schema({
+    title: {type: String, required: true},
     test: [{
         question: {type: String, required: true},
         rightAnswerId: {type: Number},

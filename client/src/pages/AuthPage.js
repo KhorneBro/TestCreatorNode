@@ -9,7 +9,7 @@ export const AuthPage = () => {
     const message = useMessage()
     const {loading, error, request, clearError} = useHttp()
     const [form, setForm] = useState({
-        email: '', password: '', name: ''
+        email: '', password: ''
     })
 
     useEffect(() => {
@@ -21,13 +21,6 @@ export const AuthPage = () => {
         setForm({...form, [event.target.name]: event.target.value})
     }
 
-    const registerHandler = async () => {
-        try {
-            const data = await request('/api/auth/register', 'POST', {...form})
-            message(data.message)
-        } catch (e) {
-        }
-    }
 
     const loginHandler = async () => {
         try {
@@ -39,8 +32,9 @@ export const AuthPage = () => {
 
     return (
         <Card>
-            <Card.Header as="h3">Форма регистрации</Card.Header>
+            <Card.Header as="h3">Войти в Аккаунт</Card.Header>
             <Card.Body>
+                <Card.Text>Нажмите "Зарегистрироватся" для создания нового аккаунта</Card.Text>
                 <Form>
                     <Form.Group controlId="email">
                         <Form.Label>Email</Form.Label>
@@ -48,16 +42,6 @@ export const AuthPage = () => {
                             type="text"
                             name="email"
                             placeholder="Введите email"
-                            required
-                            onChange={changeHandler}
-                        />
-                    </Form.Group>
-                    <Form.Group controlId="name">
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="name"
-                            placeholder="Введите имя"
                             required
                             onChange={changeHandler}
                         />
@@ -81,15 +65,17 @@ export const AuthPage = () => {
                     >
                         Войти
                     </Button>
-                    <Button
-                        variant="dark"
-                        disabled={loading}
-                        onClick={registerHandler}
-                    >
-                        Регистрация
-                    </Button>
+
                 </Form>
+                <Button
+                    href="/registration"
+                    variant="dark"
+                    disabled={loading}
+                >
+                    Зарегистрироватся
+                </Button>
             </Card.Body>
+
         </Card>
     )
 }

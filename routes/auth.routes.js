@@ -30,16 +30,11 @@ router.post(
             }
             const hashedPassword = await bcrypt.hash(password, 12)
 
-            const user = new User({
-                email, name, password: hashedPassword, telegram
-            })
+            const status = "USER"
 
-            // const users = User.find()
-            // if (users) {
-            //     console.log(users)
-            // } else {
-            //     console.log('не правилный запрос')
-            // }
+            const user = new User({
+                email, name, password: hashedPassword, telegram, status
+            })
 
             await user.save()
             res.status(201).json({
@@ -68,7 +63,7 @@ router.post(
                 })
             }
 
-            const {email, password, name} = req.body
+            const {email, password, status} = req.body
             const user = await User.findOne({email})
             if (!user) {
                 return res.status(400).json({message: 'Пользователь не найден'})
@@ -85,7 +80,7 @@ router.post(
                 {expiresIn: '1h'}
             )
 
-            res.json({token, userId: user.id})
+            res.json({token, userId: user.id, userStatus: user.status})
 
         } catch (e) {
             res.status(500).json({message: "что-то пошло не так"})

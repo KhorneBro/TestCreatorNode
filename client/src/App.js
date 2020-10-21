@@ -1,12 +1,12 @@
 import React from 'react';
-import {useRoutes} from "./routes";
+import {useRoutes} from "./pages/routes";
 import {BrowserRouter} from 'react-router-dom'
 import {useAuth} from "./hooks/auth.hook";
 import {AuthContext} from "./context/authContext";
 import { NavbarAppReact} from "./components/Navbar";
 
 function App() {
-    const {token, login, userId, logout} = useAuth()
+    const {token, login, userId, logout, status} = useAuth()
     const isAuthenticated = !!token
     const routes = useRoutes(isAuthenticated)
     return (
