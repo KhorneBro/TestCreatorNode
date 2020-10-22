@@ -1,21 +1,14 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useState} from 'react'
 import {useHttp} from "../hooks/http.hook";
 import {Button, Card, Form} from "react-bootstrap";
-import {useMessage} from "../hooks/message.hooks";
 import {AuthContext} from "../context/authContext";
 
 export const AuthPage = () => {
     const auth = useContext(AuthContext)
-    const message = useMessage()
-    const {loading, error, request, clearError} = useHttp()
+    const {loading, request} = useHttp()
     const [form, setForm] = useState({
         email: '', password: ''
     })
-
-    useEffect(() => {
-        message(error)
-        clearError()
-    }, [error, message, clearError])
 
     const changeHandler = event => {
         setForm({...form, [event.target.name]: event.target.value})
@@ -25,7 +18,8 @@ export const AuthPage = () => {
     const loginHandler = async () => {
         try {
             const data = await request('/api/auth/login', 'POST', {...form})
-            auth.login(data.token, data.userId)
+            auth.login(data.token, data.userId, data.userStatus)
+            console.log(data)
         } catch (e) {
         }
     }

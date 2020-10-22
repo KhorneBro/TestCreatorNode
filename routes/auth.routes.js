@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs')
 const {check, validationResult} = require('express-validator')
 const jwt = require('jsonwebtoken')
 const config = require('config')
+const mongoose = require('mongoose');
+
 
 /* /api/auth */
 router.post(
@@ -23,7 +25,7 @@ router.post(
                 })
             }
             const {email, password, name, telegram} = req.body
-            const candidateForRegister = await User.findOne({email, name})
+            const candidateForRegister = await User.findOne({email})
 
             if (candidateForRegister) {
                 res.status(400).json({message: "Пользователь существует"})
@@ -43,7 +45,7 @@ router.post(
 
 
         } catch (e) {
-            res.status(500).json({message: "Что-то пошло не так при регистрации"})
+            res.status(500).json({message: e})
         }
     })
 
@@ -63,7 +65,7 @@ router.post(
                 })
             }
 
-            const {email, password, status} = req.body
+            const {email, password} = req.body
             const user = await User.findOne({email})
             if (!user) {
                 return res.status(400).json({message: 'Пользователь не найден'})
@@ -74,13 +76,23 @@ router.post(
                 return res.status(400).json({message: "Не корректный пароль"})
             }
 
+            const payload = {
+                id: user._id,
+                status: user.status,
+                email: user.email
+            }
+
             const token = jwt.sign(
-                {userId: user.id},
+                payload,
                 config.get('jwtSecretKey'),
-                {expiresIn: '1h'}
+                {expiresIn: '1h'},
             )
 
-            res.json({token, userId: user.id, userStatus: user.status})
+            res.json({
+                token: `Bearer ${token}`,
+                userId: user.id,
+                userStatus: user.status
+            })
 
         } catch (e) {
             res.status(500).json({message: "что-то пошло не так"})

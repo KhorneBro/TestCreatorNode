@@ -11,7 +11,7 @@ export const NavbarAppReact = () => {
     const logoutHandler = event => {
         event.preventDefault()
         auth.logout()
-        history.push('/authenticated')
+        history.push('/login')
     }
 
     return (

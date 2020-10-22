@@ -2,8 +2,8 @@ import React, {useState} from 'react'
 import {useHttp} from "../hooks/http.hook";
 import {Button, Card, Form} from "react-bootstrap";
 
-export const RegistarationPage = () => {
-    const {loading, error, request} = useHttp()
+export const RegistrationPage = () => {
+    const {loading, request} = useHttp()
     const [form, setForm] = useState({
         email: '', password: '', name: '', telegram: ''
     })
@@ -32,15 +32,13 @@ export const RegistarationPage = () => {
         }
     }
 
-    // console.log(error)
-
     return (
         <Card>
             <Card.Header as="h3">Форма регистрации</Card.Header>
             <Card.Body>
                 <Card.Text>Если у вас уже ест аккаунт нажмите "Войти в аккаунт"</Card.Text>
 
-                <Form noValidate validated={validated} onClick={handleSubmit}>
+                <Form  validated={validated} onClick={handleSubmit}>
                     <Form.Group controlId="email">
                         <Form.Label>Email</Form.Label>
                         <Form.Control
