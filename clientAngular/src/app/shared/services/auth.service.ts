@@ -9,6 +9,7 @@ import {tap} from "rxjs/operators";
 })
 export class AuthService {
   private token = null
+  private userStatus = null
 
   constructor(private http: HttpClient) {
   }
@@ -21,9 +22,11 @@ export class AuthService {
     return this.http.post<any>('/api/auth/login', user)
       .pipe(
         tap(
-          ({token}) => {
+          ({token, userStatus}) => {
             localStorage.setItem('auth-token', token)
+            localStorage.setItem('userStatus', userStatus)
             this.setToken(token)
+
           }
         )
       )
@@ -35,6 +38,14 @@ export class AuthService {
 
   getToken(): string {
     return this.token
+  }
+
+  setUserStatus(userStatus: string) {
+    this.userStatus = userStatus
+  }
+
+  getUserStatus(): string {
+    return this.userStatus
   }
 
   isAuthenticated(): boolean {

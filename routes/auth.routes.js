@@ -79,7 +79,6 @@ router.post(
             const payload = {
                 id: user._id,
                 status: user.status,
-                email: user.email
             }
 
             const token = jwt.sign(

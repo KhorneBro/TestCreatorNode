@@ -12,6 +12,9 @@ import {AuthLayoutComponent} from './shared/layouts/auth-layout/auth-layout.comp
 import {SiteLayoutComponent} from './shared/layouts/site-layout/site-layout.component';
 import {RegisterPageComponent} from './register-page/register-page.component';
 import {TokenInterceptor} from "./shared/classes/token.interceptor";
+import { AllUsersComponent } from './all-users/all-users.component';
+import { OneUserPageComponent } from './one-user-page/one-user-page.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 
 
 @NgModule({
@@ -20,7 +23,10 @@ import {TokenInterceptor} from "./shared/classes/token.interceptor";
     LoginPageComponent,
     AuthLayoutComponent,
     SiteLayoutComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    AllUsersComponent,
+    OneUserPageComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

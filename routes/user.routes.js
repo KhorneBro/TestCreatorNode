@@ -21,7 +21,7 @@ router.get('/user/:id',
     middlewarePassport,
     async (req, res) => {
         try {
-            const user = await User.findById({id: req.params.id});
+            const user = await User.findById({_id: req.params.id});
             res.json(user)
         } catch (e) {
             res.status(500).json({message: e})

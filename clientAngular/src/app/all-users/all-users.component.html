@@ -1,0 +1,29 @@
+<div>
+  <app-loader *ngIf="loading"></app-loader>
+  <table class="table table-border table-hover" *ngIf="!loading">
+    <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Имя</th>
+      <th scope="col">Фамилия</th>
+      <th scope="col">Username</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <th scope="row">{{user._id}}</th>
+      <td>{{user.name}}</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+      <td>
+        <button routerLink="updateUser/:id">редактироват</button>
+      </td>
+      <td>
+        <button routerLink="deleteUser/:id">удалить</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
