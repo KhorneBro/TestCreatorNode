@@ -1,29 +1,47 @@
 <div>
-  <app-loader *ngIf="loading"></app-loader>
-  <table class="table table-border table-hover" *ngIf="!loading">
+  <div>
+    <button [routerLink]="['/addUser']">
+      Добавить Пользователя
+    </button>
+  </div>
+
+  <table *ngIf="users$ | async as users; else loader" class="table table-border table-hover">
     <thead class="thead-light">
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">Профиль</th>
+      <th scope="col">id</th>
+      <th scope="col">Email</th>
       <th scope="col">Имя</th>
-      <th scope="col">Фамилия</th>
-      <th scope="col">Username</th>
+      <th scope="col">Статус</th>
+      <th scope="col">Телеграмм</th>
       <th scope="col"></th>
       <th scope="col"></th>
     </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf="users.length !== 0; else empty">
     <tr *ngFor="let user of users">
+      <th [routerLink]="['/user/', user._id]" scope="row">просмотреть профиль</th>
       <th scope="row">{{user._id}}</th>
+      <td>{{user.email}}</td>
       <td>{{user.name}}</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>{{user.status}}</td>
+      <td>{{user.telegram}}</td>
       <td>
-        <button routerLink="updateUser/:id">редактироват</button>
+        <button [routerLink]="['/updateUser', user._id]">редактироват</button>
       </td>
       <td>
-        <button routerLink="deleteUser/:id">удалить</button>
+        <button (click)="deleteUser(user._id)">удалить</button>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+<ng-template #empty>
+  <div class="center">
+    пользователи не созданы
+  </div>
+</ng-template>

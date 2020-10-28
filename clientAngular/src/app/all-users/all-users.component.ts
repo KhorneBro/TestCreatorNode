@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../shared/services/user.service";
 import {AllUsers} from "../shared/interfaces";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-all-users',
@@ -9,20 +10,17 @@ import {AllUsers} from "../shared/interfaces";
 })
 export class AllUsersComponent implements OnInit {
 
-  loading: boolean = false
-
-  private users: AllUsers[] = []
+  users$: Observable<AllUsers[]>;
 
   constructor(private userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.loading = true
-    this.userService.fetch().subscribe((users) => {
-      this.loading = false
-      this.users = users
-      console.log(users)
-    })
+    this.users$ = this.userService.fetch()
   }
 
+  deleteUser(_id: string) {
+    this.userService.deleteUser(_id);
+    window.location.reload()
+  }
 }

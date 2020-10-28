@@ -7,6 +7,7 @@ import {RegisterPageComponent} from "./register-page/register-page.component";
 import {AuthGuard} from "./shared/classes/auth.guard";
 import {AllUsersComponent} from "./all-users/all-users.component";
 import {OneUserPageComponent} from "./one-user-page/one-user-page.component";
+import {UserFormComponent} from "./all-users/user-form/user-form.component";
 
 const routes: Routes = [
   {
@@ -24,7 +25,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {path: 'allUsers', component: AllUsersComponent},
-      {path: 'user/:id', component: OneUserPageComponent}
+      {path: 'user/:id', component: OneUserPageComponent},
+      {path: 'addUser', component: UserFormComponent},
+      {path: 'updateUser/:id', component: UserFormComponent},
     ]
   }
 ]

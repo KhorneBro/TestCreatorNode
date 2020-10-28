@@ -3,7 +3,7 @@ const router = Router();
 const User = require('../models/User');
 const passport = require('passport');
 
-const middlewarePassport = passport.authenticate('jwt', {session: false})
+const middlewarePassport = passport.authenticate('jwt', {session: false});
 
 router.get(
     '/allUsers',
@@ -38,37 +38,47 @@ router.post('/addUser',
                 password: req.body.password,
                 telegram: req.body.telegram,
                 status: req.body.status,
-            }).save()
+            }).save();
             res.status(201).json(user)
         } catch (e) {
             res.status(500).json({message: e})
         }
-    })
+    });
 
 router.patch('/updateUser/:id',
     middlewarePassport,
     async (req, res) => {
+
+        if (!req.body) {
+            return res.status(400).json({message: "Данные отсутствуют"})
+        }
+        const update = {
+            email: req.body.email,
+            name: req.body.name,
+            password: req.body.password,
+            telegram: req.body.telegram,
+            status: req.body.status,
+        };
+
         try {
-            const updatedUser = await new User.findOneAndUpdate(
-                {_id: req.params.id},
-                {$set: req.body},
-                {new: true}
-            )
+            let updatedUser = await User.findOne({_id: req.params.id});
+            await User.updateOne({_id: req.params.id}, update);
             res.status(200).json(updatedUser)
         } catch (e) {
             res.status(500).json({message: e})
         }
-    })
+    });
 
 router.delete('/deleteUser/:id',
     middlewarePassport,
     async (req, res) => {
         try {
-            await User.findByIdAndDelete({_id: req.params.id})
+            console.log('here');
+            await User.findByIdAndDelete({_id: req.params.id});
             res.status(200).json({message: 'Ползователь был удален'})
         } catch (e) {
             res.status(500).json({message: e})
         }
-    })
+    });
 
 module.exports = router;

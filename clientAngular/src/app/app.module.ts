@@ -15,6 +15,7 @@ import {TokenInterceptor} from "./shared/classes/token.interceptor";
 import { AllUsersComponent } from './all-users/all-users.component';
 import { OneUserPageComponent } from './one-user-page/one-user-page.component';
 import { LoaderComponent } from './shared/components/loader/loader.component';
+import { UserFormComponent } from './all-users/user-form/user-form.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { LoaderComponent } from './shared/components/loader/loader.component';
     RegisterPageComponent,
     AllUsersComponent,
     OneUserPageComponent,
-    LoaderComponent
+    LoaderComponent,
+    UserFormComponent
   ],
   imports: [
     BrowserModule,

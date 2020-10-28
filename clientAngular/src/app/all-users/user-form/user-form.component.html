@@ -1,0 +1,81 @@
+<div>
+  {{isNew ? "Добавить Пользователя" : "Редактировать Пользователя"}}
+
+  <form (ngSubmit)="onSubmit()"
+        [formGroup]="form"
+        class="form"
+  >
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input aria-describedby="email"
+             class="form-control"
+             formControlName="email"
+             id="email" type="email">
+      <div
+        *ngIf="form.get('email').invalid && form.get('email').touched">
+        <span *ngIf="form.get('email').errors['required']">Обязателное поле</span>
+        <span *ngIf="form.get('email').errors['email']">Введите корректный email</span>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label for="email">Name</label>
+      <input aria-describedby="name"
+             class="form-control"
+             formControlName="name"
+             id="name" type="text">
+      <div
+        *ngIf="form.get('email').invalid && form.get('email').touched">
+        <span *ngIf="form.get('email').errors['required']">Обязателное поле</span>
+        <span *ngIf="form.get('email').errors['email']">Введите корректный email</span>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input class="form-control"
+             formControlName="password"
+             id="password"
+             type="text">
+      <div
+        *ngIf="form.get('password').invalid && form.get('email').touched">
+        <span *ngIf="form.get('password').errors['required']">Обязателное поле</span>
+        <span
+          *ngIf="form.get('password').errors['minlength'] && form.get('password').errors['minlength']['requiredLength']">
+        Минимум {{form.get('password').errors['minlength']['requiredLength']}} символа
+        Сейчас {{form.get('password').errors['minlength']['actualLength']}}
+      </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="telegram">telegram</label>
+      <input aria-describedby="name"
+             class="form-control"
+             formControlName="telegram"
+             id="telegram" type="text">
+    </div>
+
+
+    <div class="form-group">
+      <label for="inputState">Статус</label>
+      <select class="form-control"
+              formControlName="status"
+              id="inputState">
+        <option >USER</option>
+        <option>ADMIN</option>
+      </select>
+    </div>
+
+    <button [disabled]="form.invalid || form.disabled"
+            class="btn btn-primary uniqueBtn"
+            type="submit">
+      {{isNew ? "Добавить" : "Редактировать"}}
+    </button>
+
+  </form>
+</div>
+

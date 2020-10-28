@@ -12,8 +12,8 @@ import {AuthService} from "../shared/services/auth.service";
 })
 export class LoginPageComponent implements OnInit, OnDestroy {
 
-  form: FormGroup
-  asub: Subscription
+  form: FormGroup;
+  asub: Subscription;
 
   constructor(private auth: AuthService,
               private router: Router,
@@ -30,26 +30,19 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.form = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(3)]),
-    })
-    this.route.queryParams.subscribe((params: Params) => {
-      if (params['registered']) {
-
-      } else if (params['accessDenied']) {
-
-      }
-    })
+    });
   }
 
   onSubmit() {
-    this.form.disable()
+    this.form.disable();
 
     this.asub = this.auth.login(this.form.value).subscribe(
       () => {
-        console.log("Login Success")
-        this.router.navigate(['/'])
+        console.log("Login Success");
+        this.router.navigate(['/allUsers'])
       },
       error => {
-        console.warn(error)
+        console.warn(error);
         this.form.enable()
       }
     )
